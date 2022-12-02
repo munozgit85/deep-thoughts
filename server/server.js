@@ -49,13 +49,5 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost:27017/deep_thoughts",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
-
 // Call the async function to start the server
 startApolloServer(typeDefs, resolvers);

@@ -64,3 +64,18 @@ export const ADD_REACTION = gql`
     }
   }
 `;
+
+export const DELETE_REACTION = gql`
+  mutation deleteReaction($filter: ReactionFilter!) {
+    deleteReaction(filter: $filter) {
+      _id
+      reactionCount
+      reactions {
+        _id
+        reactionBody
+        createdAt
+        username
+      }
+    }
+  }
+`;

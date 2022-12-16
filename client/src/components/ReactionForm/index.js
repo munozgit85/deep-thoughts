@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_REACTION } from "../../utils/mutations";
+import { DELETE_REACTION } from "../../utils/mutations";
 
 const ReactionForm = ({ thoughtId }) => {
   const [addReaction, { error }] = useMutation(ADD_REACTION);
+  const [deleteReaction] = useMutation(DELETE_REACTION);
   const [reactionBody, setBody] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
 
@@ -29,6 +31,21 @@ const ReactionForm = ({ thoughtId }) => {
       console.error(e);
     }
   };
+  const handleFormDelete = async (event) => {
+    event.preventDefault();
+
+    try {
+      // delete from database
+      await deleteReaction({
+        variables: { reactionBody, thoughtId },
+      });
+      // clear form value
+      setBody("");
+      setCharacterCount(0);
+    } catch (e) {
+      console.error(e);
+    }
+  };
   return (
     <div>
       <p
@@ -40,6 +57,7 @@ const ReactionForm = ({ thoughtId }) => {
       <form
         className="flex-row justify-center justify-space-between-md align-stretch"
         onSubmit={handleFormSubmit}
+        onClick={handleFormDelete}
       >
         <textarea
           placeholder="Here's a new thought..."
@@ -49,6 +67,9 @@ const ReactionForm = ({ thoughtId }) => {
         ></textarea>
         <button className="btn col-12 col-md-3" type="submit">
           Submit
+        </button>
+        <button className="btn col-12 col-md-3" type="click">
+          delete
         </button>
       </form>
     </div>

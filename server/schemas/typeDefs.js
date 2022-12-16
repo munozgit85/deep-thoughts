@@ -33,6 +33,16 @@ const typeDefs = gql`
     createdAt: String
     username: String
   }
+  type removeReaction {
+    reaction(
+      filter: ReactionFilter
+      order: ReactionOrder
+      first: Int
+      offset: Int
+    ): [Reaction]
+    reactionBody: String
+    numUids: Int
+  }
 
   type Auth {
     token: ID!
@@ -53,6 +63,7 @@ const typeDefs = gql`
     addThought(thoughtText: String!): Thought
     addReaction(thoughtId: ID!, reactionBody: String!): Thought
     addFriend(friendId: ID!): User
+    deleteReaction(filter: ReactionFilter!): removeReaction
   }
 `;
 
